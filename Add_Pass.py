@@ -44,12 +44,15 @@ def startup(window):
     window.deiconify()
     run(window)
 def pre_add():
+    #Sets Up Data / Checks Data before Adding
     global id_ent,user_ent,pass_ent
     if id_ent.get() == '' or user_ent.get() == '' or pass_ent.get() == '':
         showwarning("Not Filled Out","Please Fill Out Entire Form!")
         return None
     else:
         add_info()
+
+#Gets Encrypted Text
 def get_aes_crypto(key,text):
     encryptor = pyaes.AESModeOfOperationCTR(key)
     return encryptor.encrypt(text)
@@ -57,18 +60,23 @@ def add_info():
     global salt,inp_pass,hashed
     global id_ent,user_ent,pass_ent
     full_line = ""
+    #Adds Tabs For Parsing Later
     full_line = full_line+id_ent.get()+'\t'
     full_line = full_line+user_ent.get()+'\t'
+    #Gets The Key For AES, Uses Digest For 16 Char Key
     key = hashlib.sha256(salt+inp_pass+hashed).digest()
     p_to_enc = pass_ent.get()
     pass_aes = get_aes_crypto(key,p_to_enc)
+    #Uses Repr to Avoid Using Unicode Char
     full_line = full_line+repr(pass_aes)+'\n'
+    #Appends Data
     f = open('my_data.dat','a+')
     f.write(full_line)
     f.close()
     showinfo("Complete","Added New Info!")
     return None
 def clear():
+    #Clears Entries
     global id_ent, user_ent, pass_ent
     id_ent.delete(0,'end')
     user_ent.delete(0, 'end')
