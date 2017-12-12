@@ -15,12 +15,14 @@ def presetup_data():
         #Means Data Is Present, Prompt For Overwrite
         overwrite_yes = askyesno('Overwrite?','Previous Data Found \n Overwrite it?')
         if overwrite_yes:
+            #Deletes Data File
             os.remove('my_data.dat')
             setup_data()
         else:
             root.destroy()
             sys.exit()
     except:
+        #Means Data Is Not Present
         setup_data()
 def get_salt():
     #Chars To Use For Generating Salt
@@ -28,9 +30,11 @@ def get_salt():
     chars = []
     #Gets A Random Char From Alph 16 Times
     for i in range(16):
+        #Uses PyCrypto Random As Cryptographically Secure Random Chooser
         chars.append(random.choice(alph))
     return "".join(chars)
 def setup_data():
+    #Gets New Password
     global root
     master_pass = askstring('Password','Please Type In Your Master Password (It Cannot Be Recovered)',show='*')
     if master_pass != None:
@@ -48,11 +52,14 @@ def setup_data():
            sys.exit()
         else:
             setup_data()
+    #Salt To Be Used Later
     salt = get_salt()
     f = open('my_data.dat','w')
+    #Writes Hashed Password and Salt
     f.write(sha256(master_pass+salt).hexdigest()+'\n')
     f.write(salt+'\n')
     f.close()
+    #Tells User To Reopen PasswordStorer.py
     showinfo("Complete!","Setup Is Complete! Rerun PasswordStorer")
     root.destroy()
 def run(window):
