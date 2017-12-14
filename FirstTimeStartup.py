@@ -24,6 +24,7 @@ def presetup_data():
     except:
         #Means Data Is Not Present
         setup_data()
+
 def get_salt():
     #Chars To Use For Generating Salt
     alph = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()"
@@ -33,6 +34,7 @@ def get_salt():
         #Uses PyCrypto Random As Cryptographically Secure Random Chooser
         chars.append(random.choice(alph))
     return "".join(chars)
+
 def setup_data():
     #Gets New Password
     global root
@@ -62,12 +64,15 @@ def setup_data():
     #Tells User To Reopen PasswordStorer.py
     showinfo("Complete!","Setup Is Complete! Rerun PasswordStorer")
     root.destroy()
+
 def run(window):
     global root
     root = window
     root.withdraw()
+
 if __name__ == '__main__':
     GUI = Tk()
     run(GUI)
     presetup_data()
     GUI.mainloop()
+    sys.exit()

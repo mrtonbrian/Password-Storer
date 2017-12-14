@@ -11,6 +11,7 @@ except ImportError:
     from Tkinter import *
 import warnings
 warnings.filterwarnings('ignore')
+
 #Startup Method
 def startup(window):
     global salt
@@ -43,6 +44,7 @@ def startup(window):
                 window.destroy()
     window.deiconify()
     run(window)
+
 def pre_add():
     #Sets Up Data / Checks Data before Adding
     global id_ent,user_ent,pass_ent
@@ -56,6 +58,7 @@ def pre_add():
 def get_aes_crypto(key,text):
     encryptor = pyaes.AESModeOfOperationCTR(key)
     return encryptor.encrypt(text)
+
 def add_info():
     global salt,inp_pass,hashed
     global id_ent,user_ent,pass_ent
@@ -75,12 +78,14 @@ def add_info():
     f.close()
     showinfo("Complete","Added New Info!")
     return None
+
 def clear():
     #Clears Entries
     global id_ent, user_ent, pass_ent
     id_ent.delete(0,'end')
     user_ent.delete(0, 'end')
     pass_ent.delete(0, 'end')
+
 def run(window):
     global root
     global id_ent,user_ent,pass_ent
